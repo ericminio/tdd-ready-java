@@ -4,6 +4,9 @@ import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 public class Server {
 
@@ -17,21 +20,14 @@ public class Server {
     public void start() throws IOException {
         server = HttpServer.create( new InetSocketAddress( port ), 0 );
         server.createContext( "/", exchange -> {
-            String body = "<html>" +
-                    "<head>" +
-                    "<link rel=\"stylesheet\" href=\"/main.css\">" +
-                    "</head>"
-                    + "<body>"
-                    + "<label id=\"greetings\">Hello World</label>"
-                    + "</body>"
-                    + "</html>";
+            String body = Files.readAllLines(Paths.get("build", "resources", "main", "index.html")).stream().collect(Collectors.joining("\n"));
             exchange.getResponseHeaders().add( "content-type", "text/html" );
             exchange.sendResponseHeaders( 200, body.length() );
             exchange.getResponseBody().write( body.getBytes() );
             exchange.close();
         } );
         server.createContext( "/main.css", exchange -> {
-            String body = "#greetings { color: #00FF00; }";
+            String body = Files.readAllLines(Paths.get("build", "resources", "main", "main.css")).stream().collect(Collectors.joining("\n"));
             exchange.getResponseHeaders().add( "content-type", "text/css" );
             exchange.sendResponseHeaders( 200, body.length() );
             exchange.getResponseBody().write( body.getBytes() );
