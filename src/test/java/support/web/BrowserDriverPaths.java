@@ -33,7 +33,13 @@ public class BrowserDriverPaths {
 
     public static String firefox() {
         File current = new File("");
-        Path path = Paths.get("src", "test", "resources", "geckodriver.exe");
+        Path path;
+        String OS = System.getProperty("os.name").toLowerCase();
+        if (OS.indexOf("win") >= 0) {
+            path = Paths.get("src", "test", "resources", "geckodriver.exe");
+        } else {
+            path = Paths.get("src", "test", "resources", "geckodriver");
+        }
 
         return current.getAbsolutePath() + File.separator + path.toString();
     }
