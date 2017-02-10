@@ -1,4 +1,4 @@
-package support;
+package support.web;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package diagnose;
+package support.diagnose;
 
 import org.junit.Test;
 

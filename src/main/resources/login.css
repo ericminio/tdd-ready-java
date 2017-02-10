@@ -1,0 +1,46 @@
+#greetings {
+    text-align: center;
+    color: #01488E;
+}
+#login-box {
+    border: 1px solid #01488E;
+    margin: 10px auto;
+    padding: 10px;
+}
+#login-box input {
+    width: 190px;
+    height: 20px;
+}
+#login-feedback {
+    font-style: italic;
+}
+
+@media(max-width:320px) {
+    #login-box {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+    }
+}
+
+@media(min-width:321px) {
+    #login-box {
+        width: 260px;
+    }
+    #user-label, #password-label{
+        float: left;
+        clear: left;
+        width: 70px;
+        margin: 10px 0px;
+    }
+    #login-box input {
+        float: left;
+        margin: 10px 0px;
+    }
+    #login-button {
+        display: block;
+    }
+}
+
+
+

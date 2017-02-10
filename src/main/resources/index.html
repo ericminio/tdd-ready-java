@@ -1,8 +1,22 @@
 <html>
     <head>
-        <link rel="stylesheet" href="/main.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="login.css">
+        <script src="login.js"></script>
     </head>
     <body>
-        <label id="greetings">Hello World</label>
+        <section id="greetings">
+            <label>Welcome! :)</label>
+        </section>
+        <section id="login-box">
+            <label id="user-label">User</label>
+            <input id="user-field" />
+            <label id="password-label">Password</label>
+            <input id="password-field" type="password" />
+
+            <a id="login-button" href="#" onclick="login(document)">Connect</a>
+            <label id="login-feedback">valid credentials required</label>
+        </section>
     </body>
 </html>

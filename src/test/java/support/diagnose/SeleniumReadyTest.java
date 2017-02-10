@@ -1,4 +1,4 @@
-package diagnose;
+package support.diagnose;
 
 import com.sun.net.httpserver.HttpServer;
 import org.junit.After;
@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import support.Browsers;
+import support.web.Browsers;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

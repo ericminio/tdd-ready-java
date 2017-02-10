@@ -33,6 +33,20 @@ public class Server {
             exchange.getResponseBody().write( body.getBytes() );
             exchange.close();
         } );
+        server.createContext( "/login.css", exchange -> {
+            String body = Files.readAllLines(Paths.get("build", "resources", "main", "login.css")).stream().collect(Collectors.joining("\n"));
+            exchange.getResponseHeaders().add( "content-type", "text/css" );
+            exchange.sendResponseHeaders( 200, body.length() );
+            exchange.getResponseBody().write( body.getBytes() );
+            exchange.close();
+        } );
+        server.createContext( "/login.js", exchange -> {
+            String body = Files.readAllLines(Paths.get("build", "resources", "main", "login.js")).stream().collect(Collectors.joining("\n"));
+            exchange.getResponseHeaders().add( "content-type", "application/javascript" );
+            exchange.sendResponseHeaders( 200, body.length() );
+            exchange.getResponseBody().write( body.getBytes() );
+            exchange.close();
+        } );
         server.start();
     }
 
