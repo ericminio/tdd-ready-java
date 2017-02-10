@@ -21,6 +21,8 @@ public class AppDriver {
     }
 
     public static void close() {
-        AppDriver.instance.browser.quit();
+        if (AppDriver.instance != null && AppDriver.instance.browser != null) {
+            AppDriver.instance.browser.quit();
+        }
     }
 }
