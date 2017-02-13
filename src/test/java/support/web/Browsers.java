@@ -25,7 +25,6 @@ public class Browsers {
     }
 
     @Test
-    @Ignore
     public void firefoxCanBeInstantiated() {
         browser = Browsers.firefox();
 
@@ -33,38 +32,24 @@ public class Browsers {
     }
 
     @Test
-    @Ignore
-    public void chromeCanBeInstantiated() {
-        browser = Browsers.chrome();
+    public void headlessFirefoxCanBeInstantiated() {
+        browser = Browsers.headless();
 
         assertThat(browser, not(equalTo(null)));
     }
 
-    @Test
-    public void htmlunitCanBeInstantiated() {
-        assertThat(Browsers.headless(), not(equalTo(null)));
-    }
-
     public static HtmlUnitDriver headless() {
-        System.setProperty("webdriver.chrome.driver", BrowserDriverPaths.chrome());
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability("marionette", true);
+        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        capabilities.setCapability("marionette", false);
         capabilities.setJavascriptEnabled(true);
 
         return new HtmlUnitDriver(capabilities);
     }
 
-    public static WebDriver chrome() {
-        System.setProperty("webdriver.chrome.driver", BrowserDriverPaths.chrome());
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability("marionette", true);
-
-        return new ChromeDriver(capabilities);
-    }
-
     public static WebDriver firefox() {
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         capabilities.setCapability("marionette", false);
+        capabilities.setJavascriptEnabled(true);
 
         return new FirefoxDriver(capabilities);
     }

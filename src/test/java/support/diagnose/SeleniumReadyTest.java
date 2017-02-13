@@ -25,8 +25,17 @@ public class SeleniumReadyTest {
         server = HttpServer.create( new InetSocketAddress( 8000 ), 0 );
         server.createContext( "/", exchange -> {
             String body = "<html>"
+                    + "<head>"
+                    + "<script>"
+                    + " var change = function() { "
+                    + "     document.getElementById('greetings').innerHTML = 'hello world';"
+                    + " }"
+                    + "</script>"
+                    + "</head>"
                     + "<body>"
                     + "<label id=\"greetings\">hello</label>"
+                    + "<br/>"
+                    + "<button id=\"go\" onclick=\"change();\">Go</button>"
                     + "</body>"
                     + "</html>";
             exchange.getResponseHeaders().add( "content-type", "text/html" );
@@ -35,7 +44,6 @@ public class SeleniumReadyTest {
             exchange.close();
         } );
         server.start();
-        browser = Browsers.headless();
     }
 
     @After
@@ -43,11 +51,35 @@ public class SeleniumReadyTest {
         browser.quit();
         server.stop( 0 );
     }
+
     @Test
-    public void canAssertThatOneElementCanBeFoundByIdInOnePage() {
+    public void headlessCanFindElementOnAPage() {
+        browser = Browsers.headless();
         browser.navigate().to( "http://localhost:8000/" );
         WebElement element = browser.findElement(By.id("greetings"));
 
         assertThat(element.getText(), equalTo("hello"));
+    }
+
+    @Test
+    public void headlessCanExecuteJavascript() {
+        browser = Browsers.headless();
+        browser.navigate().to( "http://localhost:8000/" );
+        WebElement element = browser.findElement(By.id("greetings"));
+        WebElement button = browser.findElement(By.id("go"));
+        button.click();
+
+        assertThat(element.getText(), equalTo("hello world"));
+    }
+
+    @Test
+    public void firefoxDriverCanExecuteJavascript() {
+        browser = Browsers.firefox();
+        browser.navigate().to( "http://localhost:8000/" );
+        WebElement element = browser.findElement(By.id("greetings"));
+        WebElement button = browser.findElement(By.id("go"));
+        button.click();
+
+        assertThat(element.getText(), equalTo("hello world"));
     }
 }
