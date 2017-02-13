@@ -40,6 +40,6 @@ public class _01_PassLoginGateTest {
         page.type("unknown", "#password-field");
         page.click("#login-button");
 
-        assertThat(page.element("#login-feedback").getCssValue("color"), equalTo("rgb(255, 0, 0)"));
+        assertThat(page.element("#login-feedback").getCssValue("color"), equalTo("rgba(255, 0, 0, 1)"));
     }
 }

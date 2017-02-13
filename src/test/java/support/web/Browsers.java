@@ -63,9 +63,8 @@ public class Browsers {
     }
 
     public static WebDriver firefox() {
-        System.setProperty("webdriver.gecko.driver", BrowserDriverPaths.firefox());
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-        capabilities.setCapability("marionette", true);
+        capabilities.setCapability("marionette", false);
 
         return new FirefoxDriver(capabilities);
     }
