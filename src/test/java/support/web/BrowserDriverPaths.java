@@ -6,6 +6,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringEndsWith.endsWith;
@@ -14,7 +15,7 @@ public class BrowserDriverPaths {
 
     @Test
     public void geckoDriverPathIsKnown() {
-        assertThat(BrowserDriverPaths.firefox(), endsWith("geckodriver.exe"));
+        assertThat(BrowserDriverPaths.firefox(), containsString("geckodriver"));
         assertThat(new File(BrowserDriverPaths.firefox()).exists(), equalTo(true));
     }
 
