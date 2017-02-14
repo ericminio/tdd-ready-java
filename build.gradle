@@ -17,6 +17,8 @@ repositories {
 
 
 dependencies {
+    compile 'org.hsqldb:hsqldb:2.3.4'
+    compile 'org.postgresql:postgresql:9.4.1212'
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile 'org.seleniumhq.selenium:selenium-api:3.0.0-beta3'
     testCompile 'org.seleniumhq.selenium:htmlunit-driver:2.23'
