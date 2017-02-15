@@ -1,9 +1,11 @@
 <html>
     <head>
+        <title>Login</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="main.css">
         <link rel="stylesheet" href="login.css">
         <script src="login.js"></script>
+        <script src="enjoy.js"></script>
     </head>
     <body>
         <section id="greetings">
@@ -15,7 +17,7 @@
             <label id="password-label">Password</label>
             <input id="password-field" type="password" />
 
-            <a id="login-button" href="#" onclick="login(document)">Connect</a>
+            <a id="login-button" href="#" onclick="login(window, enjoy)">Connect</a>
             <label id="login-feedback">valid credentials required</label>
         </section>
     </body>

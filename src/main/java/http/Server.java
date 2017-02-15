@@ -1,56 +1,15 @@
 package http;
 
-import com.sun.net.httpserver.HttpServer;
+import data.ConnectionProvider;
+import http.routing.Router;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.stream.Collectors;
+public interface Server {
 
-public class Server {
+    void useRouter(Router router);
 
-    private int port;
-    private HttpServer server;
+    void useDatabase(ConnectionProvider connectionProvider);
 
-    public Server(int port) {
-        this.port = port;
-    }
+    void start() throws Exception;
 
-    public void start() throws IOException {
-        server = HttpServer.create( new InetSocketAddress( port ), 0 );
-        server.createContext( "/", exchange -> {
-            String body = Files.readAllLines(Paths.get("build", "resources", "main", "index.html")).stream().collect(Collectors.joining("\n"));
-            exchange.getResponseHeaders().add( "content-type", "text/html" );
-            exchange.sendResponseHeaders( 200, body.length() );
-            exchange.getResponseBody().write( body.getBytes() );
-            exchange.close();
-        } );
-        server.createContext( "/main.css", exchange -> {
-            String body = Files.readAllLines(Paths.get("build", "resources", "main", "main.css")).stream().collect(Collectors.joining("\n"));
-            exchange.getResponseHeaders().add( "content-type", "text/css" );
-            exchange.sendResponseHeaders( 200, body.length() );
-            exchange.getResponseBody().write( body.getBytes() );
-            exchange.close();
-        } );
-        server.createContext( "/login.css", exchange -> {
-            String body = Files.readAllLines(Paths.get("build", "resources", "main", "login.css")).stream().collect(Collectors.joining("\n"));
-            exchange.getResponseHeaders().add( "content-type", "text/css" );
-            exchange.sendResponseHeaders( 200, body.length() );
-            exchange.getResponseBody().write( body.getBytes() );
-            exchange.close();
-        } );
-        server.createContext( "/login.js", exchange -> {
-            String body = Files.readAllLines(Paths.get("build", "resources", "main", "login.js")).stream().collect(Collectors.joining("\n"));
-            exchange.getResponseHeaders().add( "content-type", "application/javascript" );
-            exchange.sendResponseHeaders( 200, body.length() );
-            exchange.getResponseBody().write( body.getBytes() );
-            exchange.close();
-        } );
-        server.start();
-    }
-
-    public void stop() {
-        server.stop(0);
-    }
+    void stop() throws Exception;
 }

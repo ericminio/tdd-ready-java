@@ -28,6 +28,10 @@ public class InspectablePage {
     }
 
     public void click(String selector) {
-        element(selector).click();
+        click(element(selector));
+    }
+
+    public String title() {
+        return driver.browser.getTitle();
     }
 }

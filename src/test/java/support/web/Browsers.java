@@ -39,7 +39,7 @@ public class Browsers {
     }
 
     public static HtmlUnitDriver headless() {
-        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        DesiredCapabilities capabilities = DesiredCapabilities.htmlUnit();
         capabilities.setCapability("marionette", false);
         capabilities.setJavascriptEnabled(true);
 

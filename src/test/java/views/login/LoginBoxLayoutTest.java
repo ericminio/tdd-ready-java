@@ -1,6 +1,8 @@
 package views.login;
 
-import http.Server;
+import http.routing.Router;
+import run.Routes;
+import run.SunServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +24,7 @@ import static support.matchers.IsTopAlignedWithElementMatcher.isTopAlignedWith;
 
 public class LoginBoxLayoutTest {
 
-    private Server server;
+    private SunServer server;
     private WebElement greetings;
     private WebElement userField;
     private WebElement userLabel;
@@ -34,7 +36,8 @@ public class LoginBoxLayoutTest {
 
     @Before
     public void startServer() throws IOException {
-        server = new Server(8000);
+        server = new SunServer(8000);
+        server.useRouter( Router.routing( new Routes() ));
         server.start();
     }
     @After
