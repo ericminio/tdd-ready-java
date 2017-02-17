@@ -1,8 +1,7 @@
 package features;
 
-import data.ConnectionProvider;
-import data.InMemoryDatabase;
-import data.UserRepository;
+import data.Sokoban;
+import data.UsersRepository;
 import domain.User;
 import http.Server;
 import http.routing.Router;
@@ -15,6 +14,8 @@ import support.web.AppDriver;
 import support.web.InspectablePage;
 import support.web.With;
 
+import java.sql.Connection;
+
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static support.web.AppDriver.open;
@@ -26,6 +27,7 @@ public class _01_PassingLoginGateTest {
 
     @Before
     public void startServer() throws Exception {
+        Sokoban.please().useInMemoryDatabase().clearTables();
         server = new SunServer(8000);
         server.useRouter( Router.routing( new Routes() ));
         server.start();
@@ -52,12 +54,28 @@ public class _01_PassingLoginGateTest {
     }
 
     @Test
-    public void isDoneWithValidCredentials() {
-        ConnectionProvider connectionProvider = new InMemoryDatabase();
-        UserRepository users = new UserRepository(connectionProvider);
+    public void isDoneWithValidCredentials() throws Exception {
+        UsersRepository users = new UsersRepository(Sokoban.please().getConnection());
         users.save(new User("known", "user"));
-        server.useDatabase(connectionProvider);
         page = open("http://localhost:8000", With.iPhone);
+        page.type("known", "#user-field");
+        page.type("user", "#password-field");
+        page.click("#login-button");
+
+        assertThat(page.title(), equalTo("Main gate"));
+    }
+
+    @Test
+    public void canWorkAfterHavingFailed() throws Exception {
+        try (Connection connection = Sokoban.please().getConnection()) {
+            UsersRepository users = new UsersRepository(connection);
+            users.save(new User("known", "user"));
+        }
+
+        page = open("http://localhost:8000", With.iPhone);
+        page.type("user", "#user-field");
+        page.type("unknown", "#password-field");
+        page.click("#login-button");
         page.type("known", "#user-field");
         page.type("user", "#password-field");
         page.click("#login-button");

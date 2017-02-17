@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class RoutesTest {
 
     @Test
-    public void hasARouteForHome() {
+    public void hasARouteForHome() throws Exception {
         Router router = Router.routing(new Routes());
         HttpRequest request = new HttpRequest() {{ path="/"; }};
         Endpoint endpoint = router.firstEndpointMatching(request);

@@ -1,12 +1,9 @@
 package run;
 
 import file.FileContent;
-import http.*;
+import http.HttpResponse;
 import http.routing.HttpRequestMatcher;
-import http.services.CssProvider;
-import http.services.Endpoint;
-import http.services.HtmlProvider;
-import http.services.JsProvider;
+import http.services.*;
 
 import java.util.HashMap;
 
@@ -21,24 +18,12 @@ public class Routes extends HashMap<HttpRequestMatcher, Endpoint> {
         put( withPathEndingWith( ".css" ), new CssProvider(WEBROOT) );
         put( withPathEndingWith( ".js" ), new JsProvider(WEBROOT) );
         put( withPathEndingWith( ".html" ), new HtmlProvider(WEBROOT) );
+        put( withPathEqualTo("/login"), new Login() );
         put( withPathEqualTo("/"), request -> {
             HttpResponse response = new HttpResponse();
             response.code = 200;
             response.headers.put( "content-type", "text/html" );
             response.body = FileContent.of( WEBROOT + "/index.html" );
-
-            return response;
-        });
-        put( withPathEqualTo("/login"), request -> {
-            HttpResponse response = new HttpResponse();
-            response.headers.put( "content-type", "application/json" );
-            if (request.query.contains("unknown")) {
-                response.code = 401;
-            }
-            else {
-                response.code = 200;
-            }
-            response.body = "{}";
 
             return response;
         });

@@ -2,7 +2,11 @@ package domain;
 
 public class User {
 
-    public User(String login, String password) {
+    public String login;
+    public String password;
 
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
     }
 }

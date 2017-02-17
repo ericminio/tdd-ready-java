@@ -16,6 +16,7 @@ public class InspectablePage {
     }
 
     public void type(String value, WebElement element) {
+        element.clear();
         element.sendKeys(value);
     }
 

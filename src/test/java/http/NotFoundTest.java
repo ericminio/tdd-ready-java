@@ -13,7 +13,7 @@ public class NotFoundTest {
     private HttpResponse response;
 
     @Before
-    public void thisEndpoint() {
+    public void thisEndpoint() throws Exception {
         response = notFound.handle( new HttpRequest() );
     }
 

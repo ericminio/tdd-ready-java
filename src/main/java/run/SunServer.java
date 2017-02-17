@@ -2,7 +2,7 @@ package run;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import data.ConnectionProvider;
+import data.Sokoban;
 import http.HttpRequest;
 import http.HttpResponse;
 import http.routing.Router;
@@ -14,16 +14,11 @@ import java.net.InetSocketAddress;
 public class SunServer implements Server {
 
     private HttpServer server;
-    private ConnectionProvider connectionProvider;
+    private Sokoban connectionProvider;
     private Router router;
 
     public SunServer(int port) throws IOException {
         server = HttpServer.create( new InetSocketAddress( port ), 0 );
-    }
-
-    @Override
-    public void useDatabase(ConnectionProvider connectionProvider) {
-        this.connectionProvider = connectionProvider;
     }
 
     @Override
@@ -33,7 +28,11 @@ public class SunServer implements Server {
 
     public void start() throws IOException {
         server.createContext( "/", exchange -> {
-            handle( exchange );
+            try {
+                handle( exchange );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } );
         server.start();
     }
@@ -42,7 +41,7 @@ public class SunServer implements Server {
         server.stop(0);
     }
 
-    private void handle(HttpExchange exchange) throws IOException {
+    private void handle(HttpExchange exchange) throws Exception {
         HttpRequest request = buildRequest( exchange );
         HttpResponse response = router.firstEndpointMatching( request ).handle( request );
         sendResponse( exchange, response );
