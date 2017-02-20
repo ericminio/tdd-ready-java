@@ -10,11 +10,11 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class RoutesTest {
+public class LoginRoutesTest {
 
     @Test
     public void hasARouteForHome() throws Exception {
-        Router router = Router.routing(new Routes());
+        Router router = Router.routing(new LoginRoutes());
         HttpRequest request = new HttpRequest() {{ path="/"; }};
         Endpoint endpoint = router.firstEndpointMatching(request);
         HttpResponse response = endpoint.handle(request);

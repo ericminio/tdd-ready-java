@@ -4,7 +4,7 @@ import http.HttpRequest;
 
 public class PathEqualTo implements HttpRequestMatcher {
 
-    public static HttpRequestMatcher withPathEqualTo(String path) {
+    public static HttpRequestMatcher pathEqualTo(String path) {
         return new PathEqualTo(path);
     }
 

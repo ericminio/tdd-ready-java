@@ -8,7 +8,7 @@ import http.routing.Router;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import run.Routes;
+import run.LoginRoutes;
 import run.SunServer;
 import support.web.AppDriver;
 import support.web.InspectablePage;
@@ -29,7 +29,7 @@ public class _01_PassingLoginGateTest {
     public void startServer() throws Exception {
         Sokoban.please().useInMemoryDatabase().clearTables();
         server = new SunServer(8000);
-        server.useRouter( Router.routing( new Routes() ));
+        server.useRouter( Router.routing( new LoginRoutes() ));
         server.start();
     }
     @After

@@ -1,7 +1,7 @@
 package views.login;
 
 import http.routing.Router;
-import run.Routes;
+import run.LoginRoutes;
 import run.SunServer;
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class LoginBoxLayoutTest {
     @Before
     public void startServer() throws IOException {
         server = new SunServer(8000);
-        server.useRouter( Router.routing( new Routes() ));
+        server.useRouter( Router.routing( new LoginRoutes() ));
         server.start();
     }
     @After

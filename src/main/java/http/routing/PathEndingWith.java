@@ -4,7 +4,7 @@ import http.HttpRequest;
 
 public class PathEndingWith implements HttpRequestMatcher {
 
-    public static HttpRequestMatcher withPathEndingWith(String path) {
+    public static HttpRequestMatcher pathEndingWith(String path) {
         return new PathEndingWith(path);
     }
 

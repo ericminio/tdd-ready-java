@@ -10,7 +10,7 @@ public class Launcher {
         Sokoban.please().usePostgresqlDatabase();
         int port = Integer.parseInt( args[ 0 ] );
         Server server = new SunServer(port);
-        server.useRouter( Router.routing( new Routes() ));
+        server.useRouter( Router.routing( new LoginRoutes() ));
         server.start();
     }
 }
