@@ -4,13 +4,13 @@ import domain.User;
 
 import java.sql.*;
 
-public class UsersRepository {
+public class UsersKeeper {
 
     public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS users(login varchar(200), password varchar(200))";
     public static final String TRUNCATE_TABLE = "TRUNCATE TABLE users";
     private Connection connection;
 
-    public UsersRepository(Connection connection) {
+    public UsersKeeper(Connection connection) {
         this.connection = connection;
     }
 

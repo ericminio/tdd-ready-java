@@ -26,7 +26,7 @@ public class SokobanTest {
     public void offersAWayToClearTheTables() throws SQLException {
         Sokoban.please().useInMemoryDatabase();
         try (Connection connection = Sokoban.please().getConnection()) {
-            UsersRepository users = new UsersRepository(connection);
+            UsersKeeper users = new UsersKeeper(connection);
             users.save(new User("known", "user"));
             Sokoban.please().clearTables();
             String sql = "SELECT login FROM users";
@@ -49,7 +49,7 @@ public class SokobanTest {
     public void offersAWayToClearTheTablesInPostgresqlDatabase() throws SQLException {
         Sokoban.please().usePostgresqlDatabase();
         try (Connection connection = Sokoban.please().getConnection()) {
-            UsersRepository users = new UsersRepository(connection);
+            UsersKeeper users = new UsersKeeper(connection);
             users.save(new User("known", "user"));
             Sokoban.please().clearTables();
             String sql = "SELECT login FROM users";

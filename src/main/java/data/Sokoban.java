@@ -50,13 +50,13 @@ public class Sokoban {
 
     public void createTables() throws SQLException {
         try (Connection connection = getConnection()) {
-            execute(connection, UsersRepository.CREATE_TABLE);
+            execute(connection, UsersKeeper.CREATE_TABLE);
         }
     }
 
     public void clearTables() throws SQLException {
         try (Connection connection = getConnection()) {
-            execute(connection, UsersRepository.TRUNCATE_TABLE);
+            execute(connection, UsersKeeper.TRUNCATE_TABLE);
         }
     }
 }

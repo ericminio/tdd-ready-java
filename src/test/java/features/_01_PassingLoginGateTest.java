@@ -1,7 +1,7 @@
 package features;
 
 import data.Sokoban;
-import data.UsersRepository;
+import data.UsersKeeper;
 import domain.User;
 import http.Server;
 import http.routing.Router;
@@ -55,7 +55,7 @@ public class _01_PassingLoginGateTest {
 
     @Test
     public void isDoneWithValidCredentials() throws Exception {
-        UsersRepository users = new UsersRepository(Sokoban.please().getConnection());
+        UsersKeeper users = new UsersKeeper(Sokoban.please().getConnection());
         users.save(new User("known", "user"));
         page = open("http://localhost:8000", With.iPhone);
         page.type("known", "#user-field");
@@ -68,7 +68,7 @@ public class _01_PassingLoginGateTest {
     @Test
     public void canWorkAfterHavingFailed() throws Exception {
         try (Connection connection = Sokoban.please().getConnection()) {
-            UsersRepository users = new UsersRepository(connection);
+            UsersKeeper users = new UsersKeeper(connection);
             users.save(new User("known", "user"));
         }
 
