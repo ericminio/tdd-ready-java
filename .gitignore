@@ -6,3 +6,5 @@ build
 gradlew
 gradlew.bat
 node_modules
+bower_components
+

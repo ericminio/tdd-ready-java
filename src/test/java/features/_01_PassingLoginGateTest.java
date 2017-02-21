@@ -44,8 +44,8 @@ public class _01_PassingLoginGateTest {
     @Test
     public void requiresValidCredentials() {
         page = open("http://localhost:8000", With.iPhone);
-        page.type("user", "#user-field");
-        page.type("unknown", "#password-field");
+        page.type("unknown", "#user-field");
+        page.type("user", "#password-field");
         page.click("#login-button");
 
         assertThat(page.element("#login-feedback").getCssValue("color"),
@@ -55,8 +55,10 @@ public class _01_PassingLoginGateTest {
 
     @Test
     public void isDoneWithValidCredentials() throws Exception {
-        UsersKeeper users = new UsersKeeper(Sokoban.please().getConnection());
-        users.save(new User("known", "user"));
+        try (Connection connection = Sokoban.please().getConnection()) {
+            UsersKeeper users = new UsersKeeper(connection);
+            users.save(new User("known", "12dea96fec20593566ab75692c9949596833adc9"));
+        }
         page = open("http://localhost:8000", With.iPhone);
         page.type("known", "#user-field");
         page.type("user", "#password-field");
@@ -69,12 +71,11 @@ public class _01_PassingLoginGateTest {
     public void canWorkAfterHavingFailed() throws Exception {
         try (Connection connection = Sokoban.please().getConnection()) {
             UsersKeeper users = new UsersKeeper(connection);
-            users.save(new User("known", "user"));
+            users.save(new User("known", "12dea96fec20593566ab75692c9949596833adc9"));
         }
-
         page = open("http://localhost:8000", With.iPhone);
-        page.type("user", "#user-field");
-        page.type("unknown", "#password-field");
+        page.type("unknown", "#user-field");
+        page.type("user", "#password-field");
         page.click("#login-button");
         page.type("known", "#user-field");
         page.type("user", "#password-field");

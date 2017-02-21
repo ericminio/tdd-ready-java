@@ -17,47 +17,46 @@ public class SokobanTest {
     public void createsTheTablesInMemoryDatabase() throws SQLException {
         Sokoban.please().useInMemoryDatabase();
         try (Connection connection = Sokoban.please().getConnection()) {
-            String sql = "SELECT login FROM users";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeQuery();
-        }
-    }
-    @Test
-    public void offersAWayToClearTheTables() throws SQLException {
-        Sokoban.please().useInMemoryDatabase();
-        try (Connection connection = Sokoban.please().getConnection()) {
-            UsersKeeper users = new UsersKeeper(connection);
-            users.save(new User("known", "user"));
-            Sokoban.please().clearTables();
-            String sql = "SELECT login FROM users";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet result = statement.executeQuery();
-
-            assertThat(result.next(), equalTo(false));
+            canCreateOneUser(connection);
         }
     }
     @Test
     public void createsTheTablesInLocalPostgresqlDatabase() throws SQLException {
         Sokoban.please().usePostgresqlDatabase();
         try (Connection connection = Sokoban.please().getConnection()) {
-            String sql = "SELECT login FROM users";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeQuery();
+            canCreateOneUser(connection);
+        }
+    }
+    @Test
+    public void offersAWayToClearTheTables() throws SQLException {
+        Sokoban.please().useInMemoryDatabase();
+        try (Connection connection = Sokoban.please().getConnection()) {
+            canCreateOneUser(connection);
+            Sokoban.please().clearTables();
+            verifyThatUsersIsNowEmpty(connection);
         }
     }
     @Test
     public void offersAWayToClearTheTablesInPostgresqlDatabase() throws SQLException {
         Sokoban.please().usePostgresqlDatabase();
         try (Connection connection = Sokoban.please().getConnection()) {
-            UsersKeeper users = new UsersKeeper(connection);
-            users.save(new User("known", "user"));
+            canCreateOneUser(connection);
             Sokoban.please().clearTables();
-            String sql = "SELECT login FROM users";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet result = statement.executeQuery();
-
-            assertThat(result.next(), equalTo(false));
+            verifyThatUsersIsNowEmpty(connection);
         }
     }
+    private void canCreateOneUser(Connection connection) throws SQLException {
+        UsersKeeper users = new UsersKeeper(connection);
+        users.save(new User("known", "user"));
+        PreparedStatement statement = connection.prepareStatement(UsersKeeper.SELECT_USERS);
+        ResultSet result = statement.executeQuery();
 
+        assertThat(result.next(), equalTo(true));
+    }
+    private void verifyThatUsersIsNowEmpty(Connection connection) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(UsersKeeper.SELECT_USERS);
+        ResultSet result = statement.executeQuery();
+
+        assertThat(result.next(), equalTo(false));
+    }
 }

@@ -8,6 +8,7 @@ public class UsersKeeper {
 
     public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS users(login varchar(200), password varchar(200))";
     public static final String TRUNCATE_TABLE = "TRUNCATE TABLE users";
+    public static final String SELECT_USERS = "SELECT login FROM users";
     private Connection connection;
 
     public UsersKeeper(Connection connection) {

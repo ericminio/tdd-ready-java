@@ -1,6 +1,7 @@
 var expect = require('chai').expect;
 var jsdom = require("jsdom");
 var login = require('../../main/resources/login');
+sha1 = require('../../main/resources/sha1.min');
 
 describe('login', function() {
 
@@ -24,7 +25,7 @@ describe('login', function() {
         server.close();
     });
 
-    it('serverAnswers user and password', function(exit) {
+    it('sends user and hashed password', function(exit) {
         serverAnswer = function(response) {
             response.setHeader('Content-Type', 'text/plain');
             response.setHeader('Access-Control-Allow-Origin', '*');
@@ -33,7 +34,7 @@ describe('login', function() {
         var document = jsdom.jsdom(page);
         login(document.defaultView, function(data) {
             try {
-                expect(sent).to.equal('/login?user=John&password=Doe');
+                expect(sent).to.equal('/login?user=John&password=c947ad320e66fc64998e86a55c0da210c8c1d81a');
                 exit();
             }
             catch (error) { exit(error); }

@@ -7,7 +7,7 @@ var login = function(window, done) {
     var hostname = window.location.hostname || 'localhost';
     var url = "http://"+ hostname +":"+ port +"/login";
     url += '?user=' + user;
-    url += '&password=' + password;
+    url += '&password=' + sha1(password);
 
     var xhr = new window.XMLHttpRequest();
     xhr.onreadystatechange = function() {
