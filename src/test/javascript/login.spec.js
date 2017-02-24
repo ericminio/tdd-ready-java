@@ -1,7 +1,9 @@
 var expect = require('chai').expect;
 var jsdom = require("jsdom");
 var login = require('../../main/resources/login');
-sha1 = require('../../main/resources/sha1.min');
+var fs = require('fs'), path = require('path');
+var body = require('fs').readFileSync(path.join(__dirname, '../../main/resources/sha256.min.js')) + 'return sha256;';
+sha256 = (new Function (body))();
 
 describe('login', function() {
 
@@ -34,7 +36,7 @@ describe('login', function() {
         var document = jsdom.jsdom(page);
         login(document.defaultView, function(data) {
             try {
-                expect(sent).to.equal('/login?user=John&password=c947ad320e66fc64998e86a55c0da210c8c1d81a');
+                expect(sent).to.equal('/login?user=John&password=fd53ef835b15485572a6e82cf470dcb41fd218ae5751ab7531c956a2a6bcd3c7');
                 exit();
             }
             catch (error) { exit(error); }

@@ -1,6 +1,8 @@
 package support.web;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebElement;
 
 public class InspectablePage {
@@ -34,5 +36,13 @@ public class InspectablePage {
 
     public String title() {
         return driver.browser.getTitle();
+    }
+
+    public void clickByXPath(String path) {
+        click(driver.browser.findElement(By.xpath(path)));
+    }
+
+    public void run(String script) {
+        ((JavascriptExecutor) driver.browser).executeScript(script);
     }
 }

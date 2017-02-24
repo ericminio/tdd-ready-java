@@ -57,7 +57,7 @@ public class _01_PassingLoginGateTest {
     public void isDoneWithValidCredentials() throws Exception {
         try (Connection connection = Sokoban.please().getConnection()) {
             UsersKeeper users = new UsersKeeper(connection);
-            users.save(new User("known", "12dea96fec20593566ab75692c9949596833adc9"));
+            users.save(new User("known", "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb"));
         }
         page = open("http://localhost:8000", With.iPhone);
         page.type("known", "#user-field");
@@ -71,7 +71,7 @@ public class _01_PassingLoginGateTest {
     public void canWorkAfterHavingFailed() throws Exception {
         try (Connection connection = Sokoban.please().getConnection()) {
             UsersKeeper users = new UsersKeeper(connection);
-            users.save(new User("known", "12dea96fec20593566ab75692c9949596833adc9"));
+            users.save(new User("known", "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb"));
         }
         page = open("http://localhost:8000", With.iPhone);
         page.type("unknown", "#user-field");
