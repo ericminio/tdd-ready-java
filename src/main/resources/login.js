@@ -25,6 +25,3 @@ var login = function(window, done) {
     xhr.open("GET", url, true);
     xhr.send();
 };
-
-var module = module || {}
-module.exports = login;

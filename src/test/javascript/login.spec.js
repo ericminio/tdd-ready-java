@@ -1,9 +1,7 @@
 var expect = require('chai').expect;
 var jsdom = require("jsdom");
-var login = require('../../main/resources/login');
-var fs = require('fs'), path = require('path');
-var body = require('fs').readFileSync(path.join(__dirname, '../../main/resources/sha256.min.js')) + 'return sha256;';
-sha256 = (new Function (body))();
+login = (new Function (require('fs').readFileSync('src/main/resources/login.js') + 'return login;'))();
+sha256 = (new Function (require('fs').readFileSync('src/main/resources/sha256.min.js') + 'return sha256;'))();
 
 describe('login', function() {
 

@@ -1,11 +1,9 @@
 var expect = require('chai').expect;
-var fs = require('fs'), path = require('path');
-var body = require('fs').readFileSync(path.join(__dirname, '../../main/resources/sha256.min.js')) + 'return sha256;';
-var sha = (new Function (body))();
+var sha = (new Function (require('fs').readFileSync('src/main/resources/sha256.min.js') + 'return sha256;'))();
 
-describe('sha1', function() {
+describe('sha', function() {
 
-    it('exposes sha1 hash function', function() {
+    it('exposes sha hash function', function() {
         expect(sha('Doe')).to.equal('fd53ef835b15485572a6e82cf470dcb41fd218ae5751ab7531c956a2a6bcd3c7');
     });
     it('hashes tecuser as expected', function() {
